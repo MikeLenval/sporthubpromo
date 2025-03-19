@@ -34,31 +34,168 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles.css" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P798NNRCD2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+    <!-- Встроенные критические стили -->
+    <style>
+      /* Базовые стили для отображения первого экрана */
+      :root {
+        --background: #0a0c10;
+        --card-bg: rgba(22, 28, 36, 0.7);
+        --text-primary: #ffffff;
+        --text-secondary: #a0a9b8;
+        --accent-blue: #3a8bff;
+        --accent-purple: #9c5aff;
+        --header-height: 80px;
+        --header-bg: rgba(10, 12, 16, 0.9);
+        --border-light: rgba(255, 255, 255, 0.1);
+        --transition-speed: 0.3s;
       }
-      gtag('js', new Date());
 
-      gtag('config', 'G-P798NNRCD2');
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--header-height);
+        background: var(--header-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-light);
+        z-index: 1000;
+        transition: all var(--transition-speed) ease;
+        display: flex;
+        align-items: center;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 2rem;
+        margin: 0 auto;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .logo-text {
+        color: var(--text-primary);
+      }
+
+      .main-nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .main-nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        transition: all var(--transition-speed) ease;
+      }
+
+      .hero-section {
+        text-align: center;
+        padding: 4rem 0;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .main-content {
+        padding-top: calc(var(--header-height) + 1rem);
+        padding-bottom: 6rem;
+        flex: 1;
+      }
+
+      .gradient-text {
+        font-size: 4rem;
+        font-weight: 700;
+        background: linear-gradient(
+          to right,
+          var(--accent-blue),
+          var(--accent-purple)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        line-height: 1.2;
+      }
+
+      /* Стили для анимированных элементов */
+      .logo .logo-text.highlight, .badge {
+        will-change: transform;
+      }
+    </style>
+
+    <!-- Отложенная загрузка основных стилей -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+
+    <!-- Предзагрузка шрифтов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Отложенная загрузка Font Awesome -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    </noscript>
+
+    <!-- Отложенная загрузка Google Analytics -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var gtmScript = document.createElement('script');
+          gtmScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-P798NNRCD2';
+          gtmScript.async = true;
+          document.head.appendChild(gtmScript);
+
+          gtmScript.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-P798NNRCD2');
+          };
+        }, 3000); // Задержка в 3 секунды после загрузки страницы
+      });
     </script>
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <!-- Background Elements -->
@@ -609,19 +746,19 @@
         <div class="glass-card contact-card-full">
           <div class="contact-info-row">
             <div class="contact-item">
-              <i class="fas fa-map-marker-alt"></i>
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
               <div>
-                <h4>Location</h4>
+                <h3>Location</h3>
                 <p>849 W Broadway<br />San Diego, CA 92117</p>
               </div>
             </div>
 
             <div class="contact-item">
-              <i class="fas fa-envelope"></i>
+              <i class="fas fa-envelope" aria-hidden="true"></i>
               <div>
-                <h4>Email</h4>
+                <h3>Email</h3>
                 <p><a href="mailto:info@sporthub.club">info@sporthub.club</a></p>
-              </div>
+</div>
             </div>
 
             <div class="social-media">
@@ -630,17 +767,22 @@
                 target="_blank"
                 rel="noopener"
                 class="social-icon facebook-icon"
-                ><i class="fab fa-facebook-f"></i
+                aria-label="Перейти на страницу Facebook"
+                ><i class="fab fa-facebook-f" aria-hidden="true"></i
               ></a>
               <a
                 href="https://x.com/sporthubclub"
                 target="_blank"
                 rel="noopener"
                 class="social-icon x-icon"
-                ><img src="images/x-logo.png" alt="X" width="20" height="20"
-              /></a>
+                aria-label="Перейти на страницу X (Twitter)"
+                ><picture>
+                  <source srcset="images/optimized/x-logo-small.webp" type="image/webp">
+                  <img src="images/optimized/x-logo-small.png" alt="" width="20" height="20" loading="lazy" aria-hidden="true">
+                </picture></a>
               <a href="tg://user?id=5336220846" class="social-icon telegram-icon"
-                ><i class="fab fa-telegram"></i
+                aria-label="Открыть чат в Telegram"
+                ><i class="fab fa-telegram" aria-hidden="true"></i
               ></a>
             </div>
           </div>
@@ -661,7 +803,8 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Отложенная загрузка скрипта -->
+    <script src="script.js" defer></script>
 
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
